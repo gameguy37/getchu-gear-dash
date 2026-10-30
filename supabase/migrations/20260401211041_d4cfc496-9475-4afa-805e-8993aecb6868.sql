@@ -1,0 +1,1 @@
+ALTER TABLE public.assignments ADD COLUMN IF NOT EXISTS missing_asset_notes jsonb DEFAULT '[]'::jsonb;

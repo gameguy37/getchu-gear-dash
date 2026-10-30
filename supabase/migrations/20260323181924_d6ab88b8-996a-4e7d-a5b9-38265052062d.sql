@@ -1,0 +1,1 @@
+ALTER TABLE assignments ADD COLUMN IF NOT EXISTS mission_accepted boolean NOT NULL DEFAULT false;

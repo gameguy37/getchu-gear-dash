@@ -1,0 +1,1 @@
+ALTER TABLE public.sea_of_lost_items ADD COLUMN replacement_cost numeric DEFAULT NULL;

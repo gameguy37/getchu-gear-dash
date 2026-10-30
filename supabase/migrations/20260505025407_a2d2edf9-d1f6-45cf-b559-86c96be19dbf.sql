@@ -1,0 +1,1 @@
+ALTER TABLE public.meemaw_kits ADD COLUMN IF NOT EXISTS case_count integer NOT NULL DEFAULT 1;

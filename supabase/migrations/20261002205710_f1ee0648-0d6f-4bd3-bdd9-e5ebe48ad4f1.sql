@@ -1,0 +1,1 @@
+ALTER TABLE public.assets ADD COLUMN IF NOT EXISTS is_borrowed boolean NOT NULL DEFAULT false;

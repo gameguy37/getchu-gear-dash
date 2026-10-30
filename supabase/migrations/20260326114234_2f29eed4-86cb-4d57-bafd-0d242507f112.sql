@@ -1,0 +1,2 @@
+ALTER TABLE public.employees ADD COLUMN IF NOT EXISTS sms_opt_in boolean NOT NULL DEFAULT false;
+ALTER TABLE public.employees ADD COLUMN IF NOT EXISTS sms_opt_in_timestamp timestamp with time zone DEFAULT NULL;

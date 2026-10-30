@@ -1,0 +1,28 @@
+project_id = "lrnifksjfxnvyfdnqaqm"
+
+[functions.send-job-emails]
+verify_jwt = false
+
+[functions.cleanup-ghost-jobs]
+verify_jwt = false
+
+[functions.create-user]
+verify_jwt = false
+
+[functions.send-push]
+verify_jwt = false
+
+[functions.send-sms]
+verify_jwt = false
+
+[functions.maps-proxy]
+verify_jwt = false
+
+[functions.notify-relay-message]
+verify_jwt = false
+
+[functions.send-call-sheet]
+verify_jwt = false
+
+[functions.mcp]
+verify_jwt = false
