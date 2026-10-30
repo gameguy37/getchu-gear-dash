@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "sdk_version": "0.24.0",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://lrnifksjfxnvyfdnqaqm.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "getchugear-mcp",
+      "version": "0.1.0",
+      "title": "GetchüGear MCP"
+    },
+    "tools": [
+      {
+        "name": "whoami",
+        "title": "Who am I",
+        "description": "Return the signed-in user's identity and role (admin, manager, operator, pending) in this app.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_jobs",
+        "title": "List my jobs",
+        "description": "List jobs assigned to the signed-in operator (or all jobs the caller can see under RLS), optionally filtered by status. Returns id, job number, client, date, call time, address, and status.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "needs_prep",
+                "ready_for_takeoff",
+                "launched",
+                "pending_sign_off",
+                "completed",
+                "cancelled"
+              ],
+              "description": "Optional status filter."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "description": "Max rows to return (default 25)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_job",
+        "title": "Get job details",
+        "description": "Fetch a single job by ID with its assignments (assigned operators, actual start/end times, expense/mileage, notes). RLS limits visibility to jobs the caller may see.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "job_id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "The job UUID."
+            }
+          },
+          "required": [
+            "job_id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_gear",
+        "title": "List gear checked out to me",
+        "description": "Return the gear the signed-in operator currently has checked out (status = 'checked_out'). RLS limits visibility to what the caller may see.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "search_assets",
+        "title": "Search assets",
+        "description": "Search the equipment inventory by name, category, or serial number. Returns id, name, category, serial, and status. RLS applies.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Text to match against asset_name, category, or serial_number."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "post_relay_message",
+        "title": "Post a Relay message on a job",
+        "description": "Post a message into the Relay chat for a job as the signed-in user. Use for status updates, questions, or notes. RLS enforces that the caller can post on this job.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "job_id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Job UUID to post into."
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000,
+              "description": "Message text."
+            }
+          },
+          "required": [
+            "job_id",
+            "message"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
